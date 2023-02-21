@@ -5,6 +5,7 @@ import { useFonts, Poppins_700Bold, Poppins_400Regular_Italic } from '@expo-goog
 import * as SplashScreen from 'expo-splash-screen';
 
 import { getCurrentDate } from '../utils/date'
+import { COLORS } from '../constants';
 
 const Header = () => {
 
@@ -25,9 +26,9 @@ const Header = () => {
                     imageStyle={{ borderRadius: 30, opacity: 0.12 }}
                 >
                     <View style={styles.contentContainer}>
-                        <Image source={require('../assets/images/mosqueLogo.png')} />
+                        <Image source={require('../assets/images/mosqueLogo2.png')} style={{ width: 200, height: 100 }} />
                         <Text style={{
-                            color: 'white',
+                            color: COLORS.white,
                             fontFamily: 'Poppins_700Bold',
                             fontSize: 25,
                             marginBottom: 3
@@ -35,7 +36,7 @@ const Header = () => {
                         >{getCurrentDate}</Text>
                         <Text style={{
                             fontFamily: 'Poppins_400Regular_Italic',
-                            color: 'white',
+                            color: COLORS.white,
                             fontSize: 18
                         }}
                         >12 Rabi 1444</Text>
