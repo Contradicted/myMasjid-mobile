@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import { getCurrentDate } from '../utils/date'
 import { COLORS } from '../constants';
+import PrayerTable from './PrayerTable'
 
 const Header = () => {
 
@@ -48,6 +49,7 @@ const Header = () => {
                         <Text style={{ alignSelf: 'flex-end', position: 'absolute', right: 30, bottom: 15, fontFamily: 'Poppins_400Regular_Italic', color: COLORS.white, fontSize: 20 }}>1m 30s</Text>
                     </View>
                 </ImageBackground>
+                <PrayerTable />
             </View>
 
 
