@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native'
 import React from 'react'
 
-import { useFonts, Poppins_700Bold, Poppins_400Regular_Italic } from '@expo-google-fonts/poppins';
+import { useFonts, Poppins_700Bold, Poppins_400Regular_Italic, Poppins_300Light } from '@expo-google-fonts/poppins';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { getCurrentDate } from '../utils/date'
@@ -11,7 +11,8 @@ const Header = () => {
 
     let [fontsLoaded] = useFonts({
         Poppins_700Bold,
-        Poppins_400Regular_Italic
+        Poppins_400Regular_Italic,
+        Poppins_300Light
     });
 
     if (!fontsLoaded) {
@@ -41,6 +42,11 @@ const Header = () => {
                         }}
                         >12 Rabi 1444</Text>
                     </View>
+                    <View style={styles.nextPrayerContainer}>
+                        <Text style={{ fontFamily: 'Poppins_300Light', color: COLORS.white, fontSize: 17, marginLeft: 30, marginBottom: 5 }}>Next Prayer</Text>
+                        <Text style={{ fontFamily: 'Poppins_700Bold', color: COLORS.white, fontSize: 25, marginLeft: 30 }}>Isha</Text>
+                        <Text style={{ alignSelf: 'flex-end', position: 'absolute', right: 30, bottom: 15, fontFamily: 'Poppins_400Regular_Italic', color: COLORS.white, fontSize: 20 }}>1m 30s</Text>
+                    </View>
                 </ImageBackground>
             </View>
 
@@ -53,7 +59,7 @@ export default Header
 
 const styles = StyleSheet.create({
     container: {
-        height: 250,
+        height: 260,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
     },
@@ -65,5 +71,17 @@ const styles = StyleSheet.create({
         bottom: 0,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    nextPrayerContainer: {
+        top: 220,
+        left: '12.5%',
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'start',
+        backgroundColor: COLORS.lgreen,
+        width: '75%',
+        height: 80,
+        borderRadius: 30,
     }
 })
