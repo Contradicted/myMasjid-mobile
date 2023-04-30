@@ -3,6 +3,7 @@ import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from './Home';
+import { StatusBar } from 'expo-status-bar';
 
 // Creating Tab Object
 const Tab = createBottomTabNavigator();
@@ -33,6 +34,9 @@ export default function App() {
             }}
         />
       </Tab.Navigator>
+
+      {/* Make the Status Bar light so its easier to read */}
+      <StatusBar style='light' />
     </NavigationContainer>
   );
 }
