@@ -17,6 +17,8 @@ import { auth } from './utils/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Context from './services/context';
+import { getPrayerTimetable } from './services/firebase';
 
 // Creating Tab Object
 const Tab = createBottomTabNavigator();
@@ -30,6 +32,8 @@ const myTheme = {
 
 export default function App() {
 
+  const [prayerData, setPrayerData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const Stack = createNativeStackNavigator();
@@ -44,84 +48,103 @@ export default function App() {
     })
   })
 
+  useEffect(() => {
+    getPrayerTimetable().then(res => {
+      // console.log('pray data', res);
+      setPrayerData(res)
+    }).catch(e => {
+      console.log(e)
+    }).finally(() => {
+      setIsLoading(false)
+    });
+
+  }, [])
+
+  if (isLoading) {
+    return <Text>Loading...</Text>
+  }
+
   return (
-    <NavigationContainer theme={myTheme}>
-      {isLoggedIn ? (
-        <Tab.Navigator
-          initialRouteName='Home'
-          screenOptions={({ route }) => ({
-            tabBarStyle: { backgroundColor: '#255535' },
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
+    <Context.Provider value={{ prayerData }}>
 
-              if (route.name === 'Home') {
-                iconName = focused
-                  ? 'ios-home'
-                  : 'ios-home-outline';
-              } else if (route.name === 'Settings') {
-                iconName = focused ? 'ios-home' : 'ios-home-outline';
-              }
+      <NavigationContainer theme={myTheme}>
+        {isLoggedIn ? (
+          <Tab.Navigator
+            initialRouteName='Home'
+            screenOptions={({ route }) => ({
+              tabBarStyle: { backgroundColor: '#255535' },
+              tabBarIcon: ({ focused, color, size }) => {
+                let iconName;
 
-              if (route.name === 'Timetable') {
-                iconName = focused
-                  ? 'ios-calendar'
-                  : 'ios-calendar-outline';
-              } else if (route.name === 'Settings') {
-                iconName = focused ? 'ios-calendar' : 'ios-calendar-outline';
-              }
+                if (route.name === 'Home') {
+                  iconName = focused
+                    ? 'ios-home'
+                    : 'ios-home-outline';
+                } else if (route.name === 'Settings') {
+                  iconName = focused ? 'ios-home' : 'ios-home-outline';
+                }
 
-              if (route.name === 'Profile') {
-                iconName = focused
-                  ? 'person'
-                  : 'person-outline';
-              } else if (route.name === 'Settings') {
-                iconName = focused ? 'person' : 'person-outline';
-              }
+                if (route.name === 'Timetable') {
+                  iconName = focused
+                    ? 'ios-calendar'
+                    : 'ios-calendar-outline';
+                } else if (route.name === 'Settings') {
+                  iconName = focused ? 'ios-calendar' : 'ios-calendar-outline';
+                }
 
-              // You can return any component that you like here!
-              return <Ionicons name={iconName} size={30} color={color} />;
-            },
-            tabBarActiveTintColor: '#fff',
-            tabBarInactiveTintColor: '#104022',
-          })}>
-          <Tab.Screen
-            name='Timetable'
-            component={Timetable}
-            options={
-              {
-                headerShown: false,
-                tabBarShowLabel: false,
-                // tabBarIcon: () => { return <Image source={require('./assets/images/house.png')} /> }
-              }}
-          />
-          <Tab.Screen
-            name='Home'
-            component={Home}
-            options={
-              {
-                headerShown: false,
-                tabBarShowLabel: false,
-                // tabBarIcon: () => { return <Image source={require('./assets/images/house.png')} /> }
-              }}
-          />
-          <Tab.Screen
-            name='Profile'
-            component={Profile}
-            options={
-              {
-                headerShown: false,
-                tabBarShowLabel: false,
-              }}
-          />
-        </Tab.Navigator>
-      ) : (
-        <Stack.Navigator>
-          <Stack.Screen options={{ headerShown: false }} name='Login' component={Login} />
-        </Stack.Navigator>
-      )}
+                if (route.name === 'Profile') {
+                  iconName = focused
+                    ? 'person'
+                    : 'person-outline';
+                } else if (route.name === 'Settings') {
+                  iconName = focused ? 'person' : 'person-outline';
+                }
 
-      {/* Make the Status Bar light so its easier to read */}
-      <StatusBar style='light' />
-    </NavigationContainer>
+                // You can return any component that you like here!
+                return <Ionicons name={iconName} size={30} color={color} />;
+              },
+              tabBarActiveTintColor: '#fff',
+              tabBarInactiveTintColor: '#104022',
+            })}>
+            <Tab.Screen
+              name='Timetable'
+              component={Timetable}
+              options={
+                {
+                  headerShown: false,
+                  tabBarShowLabel: false,
+                  // tabBarIcon: () => { return <Image source={require('./assets/images/house.png')} /> }
+                }}
+            />
+            <Tab.Screen
+              name='Home'
+              component={Home}
+              options={
+                {
+                  headerShown: false,
+                  tabBarShowLabel: false,
+                  // tabBarIcon: () => { return <Image source={require('./assets/images/house.png')} /> }
+                }}
+            />
+            <Tab.Screen
+              name='Profile'
+              component={Profile}
+              options={
+                {
+                  headerShown: false,
+                  tabBarShowLabel: false,
+                }}
+            />
+          </Tab.Navigator>
+        ) : (
+          <Stack.Navigator>
+            <Stack.Screen options={{ headerShown: false }} name='Login' component={Login} />
+          </Stack.Navigator>
+        )}
+
+        {/* Make the Status Bar light so its easier to read */}
+        <StatusBar style='light' />
+      </NavigationContainer>
+    </Context.Provider>
   );
 }
