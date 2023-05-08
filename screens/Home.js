@@ -8,7 +8,7 @@ import { getCurrentDate } from '../utils/date'
 import { COLORS } from '../constants';
 import PrayerTable from '../components/PrayerTable'
 
-const Header = () => {
+const Home = () => {
 
     let [fontsLoaded] = useFonts({
         Poppins_700Bold,
@@ -43,19 +43,13 @@ const Header = () => {
                         }}
                         >12 Rabi 1444</Text>
                     </View>
-                    <View style={styles.nextPrayerContainer}>
-                        <Text style={{ fontFamily: 'Poppins_300Light', color: COLORS.white, fontSize: 17, marginLeft: 30, marginBottom: 5 }}>Next Prayer</Text>
-                        <Text style={{ fontFamily: 'Poppins_700Bold', color: COLORS.white, fontSize: 25, marginLeft: 30 }}>Isha</Text>
-                        <Text style={{ alignSelf: 'flex-end', position: 'absolute', right: 30, bottom: 15, fontFamily: 'Poppins_400Regular_Italic', color: COLORS.white, fontSize: 20 }}>1m 30s</Text>
-                    </View>
                 </ImageBackground>
-                <PrayerTable />
             </View>
         )
     }
 }
 
-export default Header
+export default Home;
 
 const styles = StyleSheet.create({
     container: {
@@ -71,17 +65,5 @@ const styles = StyleSheet.create({
         bottom: 0,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    nextPrayerContainer: {
-        top: 220,
-        left: '12.5%',
-        right: 0,
-        bottom: 0,
-        justifyContent: 'center',
-        alignItems: 'start',
-        backgroundColor: COLORS.lgreen,
-        width: '75%',
-        height: 80,
-        borderRadius: 30,
     }
 })

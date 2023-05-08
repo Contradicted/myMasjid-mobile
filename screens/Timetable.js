@@ -8,7 +8,7 @@ import { getCurrentDate } from '../utils/date'
 import { COLORS } from '../constants';
 import PrayerTable from '../components/PrayerTable'
 
-const Header = () => {
+const Timetable = () => {
 
     let [fontsLoaded] = useFonts({
         Poppins_700Bold,
@@ -55,7 +55,7 @@ const Header = () => {
     }
 }
 
-export default Header
+export default Timetable;
 
 const styles = StyleSheet.create({
     container: {
